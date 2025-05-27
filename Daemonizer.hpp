@@ -1,23 +1,28 @@
-#pragma once
+#ifndef DAEMONIZER_HPP
+    #define DAEMONIZER_HPP
+    #include "TintinReporter.hpp"
+    #include "Server.hpp"
 
-#include "TintinReporter.hpp"
 
-class Daemonizer {
-    public:
-        Daemonizer();
-        Daemonizer(Tintin_reporter *reporter);
+    class Daemonizer {
+        public:
+        Daemonizer(Tintin_reporter &reporter,Server &server);
         ~Daemonizer();
         void run();
         bool done;
-        static void daemonize();
+        void daemonize();
         
         
         private:
-        bool check_root();
-        bool check_lock();
-        void lock();
-        int lock_fd;
-        Tintin_reporter* reporter;
-        Daemonizer(const Daemonizer& other);
-        Daemonizer & operator=(const Daemonizer& other); 
-};
+            Daemonizer();
+            bool check_root();
+            bool check_lock();
+            void lock();
+            void unlock();
+            int lock_fd;
+            Tintin_reporter& reporter;
+            Daemonizer(const Daemonizer& other);
+            Daemonizer & operator=(const Daemonizer& other);
+            Server&  server; 
+    };
+#endif

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: samusanc <samusanc@student.42madrid>       +#+  +:+       +#+         #
+#    By: amejia <amejia@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/24 19:28:25 by samusanc          #+#    #+#              #
-#    Updated: 2024/07/18 19:22:34 by samusanc         ###   ########.fr        #
+#    Updated: 2025/05/26 22:06:23 by amejia           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,12 +25,12 @@ OBJS		=	$(SRCS:.cpp=.o)
 
 $(O_DIR)/%.o: %.cpp
 	mkdir -p $(@D)
-	$(CXX) -c $< -o $(O_DIR)/$(<:.cpp=.o)
+	$(CXX) -c -g3 $< -o $(O_DIR)/$(<:.cpp=.o)
 
 all: $(NAME) $(SRCS)
 
 $(NAME): $(OBJS) $(INC)
-	$(CXX) $(OBJS) -o $(NAME)
+	$(CXX) $(OBJS)   -g3 -o  $(NAME)
 
 re: fclean all
 

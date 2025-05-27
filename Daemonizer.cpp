@@ -7,30 +7,21 @@
 #include  <sys/stat.h>
 #include <fcntl.h>
 #define LOCK_PATH "/var/run/matt_daemon.lock"
+#include <sstream>
 
-Daemonizer::Daemonizer(): done(false), lock_fd(-1), reporter(NULL){
-    if (!check_lock()){
-        this->done = true;
-        std::cerr << "Another instance of matt-daemon is running. Stoping" << std::endl;
-    }
+
+Daemonizer::Daemonizer(Tintin_reporter &reporter, Server &server): done(false), lock_fd(-1), reporter(reporter), server(server){
     if (!check_root()){
         this->done = true;
+        reporter.err("This program needs root permissions to run");
         std::cerr <<"This program needs root permissions to run" << std::endl;
+        std::exit(1);
     }
-    return;
-}
-
-
-Daemonizer::Daemonizer(Tintin_reporter *reporter): done(false), lock_fd(-1), reporter(reporter){
-    if (!check_lock()){
+    else if (!check_lock()){
         this->done = true;
-        this->reporter->err("Another instance of matt-daemon is running. Stoping");
+        reporter.err("Another instance of matt-daemon is running. Stoping");
         std::cerr << "Another instance of matt-daemon is running. Stoping" << std::endl;
-    }
-    if (!check_root()){
-        this->done = true;
-        this->reporter->err("This program needs root permissions to run");
-        std::cerr <<"This program needs root permissions to run" << std::endl;
+        std::exit(1);
     }
     return;
 }
@@ -57,7 +48,10 @@ Daemonizer::~Daemonizer(){
 
 void Daemonizer::run(){
     this->lock();
-    while this->server;
+    while (!server.fatal && !server.get_quit()){
+        server.loop();
+    };
+    this->unlock();
 }
 
 void Daemonizer::lock(){
@@ -69,8 +63,15 @@ void Daemonizer::lock(){
     }
 }
 
+void Daemonizer::unlock(){
+    flock(lock_fd,LOCK_UN);
+    close(this->lock_fd);
+    unlink(LOCK_PATH);
+}
+
 void Daemonizer::daemonize(){
     
+    reporter.info("Entering Daemon mode");
     pid_t pid = fork();
     if (pid > 0)
         exit( 0);
@@ -80,6 +81,9 @@ void Daemonizer::daemonize(){
         exit( 0);
     chdir("/");
     umask(0);
+    std::ostringstream message_stream;
+    message_stream << "Started. PID: " << getpid() <<".";
+    reporter.info(message_stream.str());
     close(STDIN_FILENO);
     close(STDOUT_FILENO);
     close(STDERR_FILENO);

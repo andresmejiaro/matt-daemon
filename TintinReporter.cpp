@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   MattDaemon.cpp                                     :+:      :+:    :+:   */
+/*   TintinReporter.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samusanc <samusanc@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: amejia <amejia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 21:23:41 by samusanc          #+#    #+#             */
-/*   Updated: 2025/05/01 22:05:16 by samusanc         ###   ########.fr       */
+/*   Updated: 2025/05/26 22:53:27 by amejia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 #include <system_error>
 
 Tintin_reporter::Tintin_reporter() {
-	//lock = false;
-	//this->open_log();
-	//this->open_lock();
-	//this->info("Started.");
+	// lock = false;
+	// this->open_log();
+	// this->open_lock();
+	// this->info("Started.");
 }
 
 
 
 Tintin_reporter::~Tintin_reporter() {
-	//if (lock)
-	//	this->delete_lock();
-	//this->_log_file.close();
-	//this->info("Quitting.");
+	// if (lock)
+	// 	this->delete_lock();
+	// this->_log_file.close();
+	// this->info("Quitting.");
 }
 
 
@@ -35,6 +35,7 @@ Tintin_reporter::~Tintin_reporter() {
 bool	Tintin_reporter::open_log() {
     
 	const std::string filename = "/var/log/matt_daemon/matt_daemon.log";
+	//const std::string filename = "/home/andres/matt_daemon.log"; //remove
 	std::filesystem::path p{filename};
 
 	std::error_code ec;
