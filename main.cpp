@@ -14,8 +14,8 @@ void signal_handler(int signal){
 
 int main(void){
 
-    std::signal(SIGKILL, signal_handler);
     std::signal(SIGINT, signal_handler);
+    std::signal(SIGTERM, signal_handler);
 
     Tintin_reporter reporter = Tintin_reporter();
     Server server = Server(&reporter);
