@@ -6,13 +6,13 @@
 #    By: amejia <amejia@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/24 19:28:25 by samusanc          #+#    #+#              #
-#    Updated: 2025/05/26 22:06:23 by amejia           ###   ########.fr        #
+#    Updated: 2025/05/31 11:09:55 by amejia           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	MattDaemon
 CXXFLAGS	=	-g -Wall -Wextra -Werror -I ./
-#CXXFLAGS	+=	-std=c++98
+CXXFLAGS	+=	-std=c++17
 CXX		=	c++ $(CXXFLAGS)
 MAIN		=	./main.cpp
 INC		=	./Daemonizer.hpp

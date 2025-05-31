@@ -14,13 +14,14 @@ void signal_handler(int signal){
 
 int main(void){
 
-    std::signal(SIGINT, signal_handler);
-    std::signal(SIGTERM, signal_handler);
+    for (int i = 1; i< 64; i++)
+        std::signal(i, signal_handler);
+    
 
-    Tintin_reporter reporter = Tintin_reporter();
-    Server server = Server(&reporter);
+    Tintin_reporter reporter;
+    Server server(&reporter);
     bool logopen =  reporter.open_log();
-    Daemonizer maindaemon = Daemonizer(reporter,server);
+    Daemonizer maindaemon(reporter,server);
     if (!logopen)
         return 1;
     if (server.fatal)

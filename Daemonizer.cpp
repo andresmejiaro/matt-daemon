@@ -6,7 +6,7 @@
 #include  <sys/file.h>
 #include  <sys/stat.h>
 #include <fcntl.h>
-#define LOCK_PATH "/var/run/matt_daemon.lock"
+#define LOCK_PATH "/var/lock/matt_daemon.lock"
 #include <sstream>
 
 
@@ -27,10 +27,9 @@ Daemonizer::Daemonizer(Tintin_reporter &reporter, Server &server): done(false), 
 }
 
 
-
-
 bool Daemonizer::check_lock(){
-    return !std::filesystem::exists(LOCK_PATH);
+    struct stat sb;
+    return stat(LOCK_PATH,&sb);
 }
 
 bool Daemonizer::check_root(){

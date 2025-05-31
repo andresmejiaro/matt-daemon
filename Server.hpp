@@ -3,23 +3,6 @@
     #include "TintinReporter.hpp"
 
 
-    // void err(const std::string& msg) {
-    //     if (!msg.empty()) {
-    //         std::cerr << msg << std::endl;
-    //     } else {
-    //         std::cerr << "Fatal error" << std::endl;
-    //     }
-    //     exit(1);
-    // }
-    // void my_cleanup() {
-    // 	glob->delete_lock();
-    // 	glob->info("Quiting.");
-    // }
-
-    // void signal_handler(int signum) {
-    // 	//my_cleanup();
-    //     std::_Exit(signum);
-    // }
     extern volatile sig_atomic_t g_signal_recv;
 
     struct Client {
